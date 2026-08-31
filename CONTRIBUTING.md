@@ -4,14 +4,43 @@ We are excited to see you want to be a part of this project by contributing. Her
 
 ## Get Started
 
-### Clone and Install
+### Prerequisites
 
-```bash
-git clone https://github.com/your-username/rhdh.git   # Clone your forked repository
-cd rhdh                                               # Change to the project directory
-yarn install                                          # Install dependencies
-yarn tsc                                              # Run type generation and checks
-```
+Before you begin, ensure you have the following installed:
+
+- **[Node.js](https://nodejs.org/en/)** — version **24** (see [`.nvmrc`](.nvmrc) for the exact version). We recommend using [nvm](https://github.com/nvm-sh/nvm) to manage Node versions:
+
+  ```bash
+  nvm install    # Installs the version specified in .nvmrc
+  nvm use        # Switches to the correct version
+  ```
+
+- **[Corepack](https://github.com/nodejs/corepack)** — ships with Node.js. Enable it so that the correct Yarn version is used automatically:
+
+  ```bash
+  corepack enable
+  ```
+
+- **[Git](https://git-scm.com/)** — for version control.
+
+### Fork, Clone, and Install
+
+1. **Fork the repository** on GitHub by clicking the **Fork** button on the [rhdh repository page](https://github.com/redhat-developer/rhdh).
+
+2. **Clone your fork and install dependencies:**
+
+   ```bash
+   git clone https://github.com/your-username/rhdh.git   # Clone your forked repository
+   cd rhdh                                               # Change to the project directory
+   yarn install                                          # Install dependencies
+   yarn tsc                                              # Run type generation and checks
+   ```
+
+3. **Add the upstream remote** so you can keep your fork up to date:
+
+   ```bash
+   git remote add upstream https://github.com/redhat-developer/rhdh.git
+   ```
 
 ### Run the Showcase App
 
@@ -33,6 +62,34 @@ yarn prettier:check    # Checks for formatting issues across all packages
 yarn prettier:fix      # Fixes formatting issues automatically across all packages
 yarn clean             # Cleans up build artifacts across all packages
 ```
+
+## Using Fullsend (AI-Assisted Development)
+
+This repository uses [Fullsend](https://github.com/fullsend-ai/fullsend), an AI-powered development assistant that can help triage issues, implement code changes, and fix failing tests. Fullsend runs as a GitHub Actions workflow and responds to slash commands in issue and pull request comments.
+
+### Available Commands
+
+Use these slash commands in GitHub issue or pull request comments:
+
+| Command                   | Where to Use  | Description                                                                                                        |
+| ------------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------ |
+| `/fs-triage`              | Issue comment | Asks the AI triage agent to analyze the issue, identify root cause, and assess complexity.                         |
+| `/fs-code <instructions>` | Issue comment | Asks the AI code agent to implement a change. Provide specific instructions after the command.                     |
+| `/fs-fix <instructions>`  | PR comment    | Asks the AI fix agent to update an existing PR. Your instructions take precedence over the original approach.      |
+| `/fs-fix-stop`            | PR comment    | Disables the fix agent for that PR (adds `fullsend-no-fix` label). Remove the label or use `/fs-fix` to re-enable. |
+
+### Typical Workflow
+
+1. **Open an issue** describing the bug, feature, or improvement.
+2. **Triage the issue** by commenting `/fs-triage`. The triage agent analyzes the issue and may ask clarifying questions.
+3. **Request implementation** by commenting `/fs-code <specific instructions>`. The code agent creates a branch, implements the change, runs tests, and opens a pull request.
+4. **Review the PR** as you would any other contribution. If the approach needs adjustment, comment `/fs-fix <new instructions>` on the PR.
+
+### AI Assistant Rules
+
+This repository includes AI assistant rules (in the `.claude/`, `.cursor/`, and `.rulesync/` directories) that guide AI agents on coding conventions, testing patterns, and security best practices. If you use an AI-powered editor such as Claude Code or Cursor, these rules are loaded automatically to help you follow project conventions.
+
+See [`.rulesync/README.md`](.rulesync/README.md) for details on managing these rules.
 
 ## Contributions
 
@@ -160,6 +217,7 @@ To test image builds from a fork:
    - `QUAY_E2E_RUNNER_IMAGE_REPO` = `<your-namespace>/<repo>` for [push-e2e-runner.yaml](.github/workflows/push-e2e-runner.yaml)
 
    Do not set either variable under the `rhdh-community/` namespace. Forks that do so are rejected.
+
 3. Set secrets `QUAY_USERNAME` and `QUAY_TOKEN` for a robot account scoped to **that** namespace only.
 4. Run the workflow via **Actions → Run workflow** (`workflow_dispatch`), or push/schedule once the variable is set.
 
