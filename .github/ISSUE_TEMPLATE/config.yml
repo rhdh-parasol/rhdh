@@ -1,8 +1,8 @@
 blank_issues_enabled: false
 contact_links:
-  - name: ❓ Red Hat Developer Hub JIRA
+  - name: ❓ Other Red Hat Developer Hub issues (JIRA)
     url: https://issues.redhat.com/browse/RHDHBUGS
-    about: Please report any redhat-developer/rhdh issues or feature requests in JIRA - https://issues.redhat.com/browse/RHDHBUGS
+    about: Use JIRA for product issues and feature requests; GitHub issue templates in this repository are for automation requests.
   - name: ❓ Red Hat Developer Hub Plugins
     url: https://issues.redhat.com/browse/RHDHBUGS
     about: Please report any issues with https://github.com/redhat-developer/rhdh-plugins in JIRA - https://issues.redhat.com/browse/RHDHBUGS
