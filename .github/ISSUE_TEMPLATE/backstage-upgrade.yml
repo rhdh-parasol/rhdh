@@ -1,0 +1,40 @@
+name: Backstage dependency upgrade
+description: Request a Backstage release or dependency-pattern upgrade
+title: "Upgrade Backstage to "
+labels:
+  - backstage-upgrade
+  - ready-for-triage
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Fullsend will use `/rhdh-backstage-upgrade` to implement this request and open a pull request.
+        Specify either a release or a dependency pattern, not both. Leave both blank for the latest stable Backstage release.
+
+  - type: input
+    id: release
+    attributes:
+      label: Backstage release
+      description: Exact stable Backstage version. Leave blank when using a dependency pattern.
+      placeholder: 1.54.4
+
+  - type: input
+    id: pattern
+    attributes:
+      label: Dependency pattern
+      description: Package glob to pass to `versions:bump`. Leave blank when specifying a release.
+      placeholder: "@{backstage,backstage-community}/*"
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Add constraints or relevant links that Fullsend should consider.
+
+  - type: checkboxes
+    id: verification
+    attributes:
+      label: Verification
+      options:
+        - label: Run the repository-specific checks required by `/rhdh-backstage-upgrade` before opening the pull request.
+          required: true
