@@ -7,3 +7,19 @@ skills:
 allowed_remote_resources:
   - https://raw.githubusercontent.com/fullsend-ai/agents/
   - https://github.com/redhat-developer/rhdh-skills/
+
+# A Backstage bump on this monorepo needs two full `yarn install` runs (once to
+# get a working tree, once after the bump) plus a build, on a workspace set far
+# larger than the base harness's 35-minute default was sized for. Run 34879198625
+# was killed mid-install at that default and produced no PR.
+#
+# `timeout_minutes` is the knob the runner actually enforces; TIMEOUT_SECONDS is
+# carried in the sandbox env and kept in sync so the agent budgets against the
+# same number. Both are per-iteration, and the base sets
+# validation_loop.max_iterations: 2, so worst case is 2x this — still well under
+# the 360-minute GitHub Actions job default, which sets the real ceiling.
+timeout_minutes: 90
+
+env:
+  sandbox:
+    TIMEOUT_SECONDS: "5400"
