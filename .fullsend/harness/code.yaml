@@ -7,3 +7,18 @@ skills:
 allowed_remote_resources:
   - https://raw.githubusercontent.com/fullsend-ai/agents/
   - https://github.com/redhat-developer/rhdh-skills/
+
+# Run 34879198625 (RHIDP-17140) was killed at the base harness's 35-minute
+# default before it could commit. The install itself is not the slow part —
+# fixing the Yarn/proxy gap (.yarnrc.yml) brings `yarn install` back under
+# 5 minutes — but the full flow (bump, second install, tsc/build/test) left
+# little headroom at 35. `timeout_minutes` is the knob the runner enforces
+# and kills on; TIMEOUT_SECONDS is kept in sync so the agent's own budget
+# arithmetic agrees with it. Per-iteration; the base's
+# validation_loop.max_iterations: 2 makes worst case 120 minutes, still
+# well under the 360-minute GitHub Actions job default.
+timeout_minutes: 60
+
+env:
+  sandbox:
+    TIMEOUT_SECONDS: "3600"
