@@ -2,7 +2,7 @@
 
 Repo-specific notes for agents working in the Fullsend sandbox on this
 monorepo. General coding guidance lives in the agent definition; this file
-covers only the things about _this_ repo and _this_ sandbox that have
+covers only the things about *this* repo and *this* sandbox that have
 previously led an agent astray.
 
 ## Yarn and the sandbox proxy
@@ -37,8 +37,8 @@ download or a stalled install.
 
 ## Let `yarn install` finish
 
-This is a large monorepo with independent Yarn projects in `e2e-tests/` and
-`.ci/`. A cold `yarn install --immutable` can take several minutes. Let it run to
+This is a large monorepo with a second workspace under `dynamic-plugins/`. A
+cold `yarn install --immutable` can take several minutes. Let it run to
 completion rather than killing it on early impatience.
 
 If an install genuinely fails, fix the cause and re-run it. Do **not**
@@ -46,15 +46,3 @@ hand-edit `package.json` or `yarn.lock` entries from a version manifest as a
 substitute for a real install: the result is unverifiable and desynchronizes
 the lockfile. On run 34879198625 this consumed the remaining time budget
 without producing a usable commit.
-
-## Dependency changes are complete only when every project agrees
-
-For each changed dependency manifest, find the Yarn project that owns it.
-Run `yarn install` there and commit that project's regenerated `yarn.lock`.
-Installing at the repository root does not update independent projects.
-
-Before committing, run `yarn install --immutable` in each affected project.
-Fullsend also checks manifest/lockfile workspace declarations through
-`.pre-commit-config.yaml` before publishing. If that check fails, regenerate
-the indicated lockfile in the sandbox and retry; the check does not replace
-the full immutable install.
