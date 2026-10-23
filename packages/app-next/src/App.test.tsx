@@ -3,7 +3,10 @@ import { renderWithEffects } from '@backstage/test-utils';
 jest.setTimeout(30_000);
 
 describe('App', () => {
-  it('should render', async () => {
+  let app: typeof import('./App').default;
+
+  // Loading the full frontend is setup, not part of the render assertion.
+  beforeAll(async () => {
     process.env = {
       NODE_ENV: 'test',
       APP_CONFIG: [
@@ -26,7 +29,10 @@ describe('App', () => {
       ] as any,
     };
 
-    const { default: app } = await import('./App');
+    ({ default: app } = await import('./App'));
+  }, 60_000);
+
+  it('should render', async () => {
     const rendered = await renderWithEffects(app);
     expect(rendered.baseElement).toBeInTheDocument();
   });

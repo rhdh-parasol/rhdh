@@ -1,4 +1,4 @@
-import { Fragment, lazy, Suspense, useContext } from 'react';
+import { Fragment, useContext } from 'react';
 import * as useAsync from 'react-use/lib/useAsync';
 
 import * as appDefaults from '@backstage/app-defaults';
@@ -20,8 +20,7 @@ import { removeScalprum } from '@scalprum/core';
 import { waitFor, within } from '@testing-library/dom';
 
 import initializeRemotePlugins from '../../utils/dynamicUI/initializeRemotePlugins';
-
-const DynamicRoot = lazy(() => import('./DynamicRoot'));
+import DynamicRoot from './DynamicRoot';
 
 const InnerPage = () => {
   const app = useApp();
@@ -76,21 +75,19 @@ const MockApp = ({
 }: {
   dynamicPlugins: any; // allow tests to supply specific values for specific use cases
 }) => (
-  <Suspense fallback={null}>
-    <DynamicRoot
-      apis={[]}
-      afterInit={async () =>
-        Promise.resolve({
-          default: () => {
-            return <MockPage />;
-          },
-        })
-      }
-      dynamicPlugins={dynamicPlugins}
-      scalprumConfig={{}}
-      baseUrl="http://localhost:7007"
-    />
-  </Suspense>
+  <DynamicRoot
+    apis={[]}
+    afterInit={async () =>
+      Promise.resolve({
+        default: () => {
+          return <MockPage />;
+        },
+      })
+    }
+    dynamicPlugins={dynamicPlugins}
+    scalprumConfig={{}}
+    baseUrl="http://localhost:7007"
+  />
 );
 
 jest.mock('@scalprum/core', () => ({
@@ -118,11 +115,9 @@ jest.mock('@backstage/app-defaults', () => ({
   __esModule: true,
 }));
 
-const mockInitializeRemotePlugins = jest.fn() as jest.MockedFunction<
-  typeof initializeRemotePlugins
->;
+const mockInitializeRemotePlugins = jest.mocked(initializeRemotePlugins);
 jest.mock('../../utils/dynamicUI/initializeRemotePlugins', () => ({
-  default: mockInitializeRemotePlugins,
+  default: jest.fn(),
   __esModule: true,
 }));
 
