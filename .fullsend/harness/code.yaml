@@ -1,5 +1,5 @@
 # Extend Fullsend's code agent with the RHDH Backstage upgrade workflow.
-base: https://raw.githubusercontent.com/fullsend-ai/agents/dc7c805632ebb6b79a4b0890ef6da17fe8fc539d/harness/code.yaml#sha256=6493021f96431dc55b330d553c543b3c8463a1987c8f62e911b37286cadd855c
+base: https://raw.githubusercontent.com/fullsend-ai/agents/ea29de9bb8b1729b04c0597b48a5c7aae62deb71/harness/code.yaml#sha256=cfa49d4677cc4d6544fcf878e05b0f95620bbb62907289dbc5a22681a7679976
 
 skills:
   - https://github.com/redhat-developer/rhdh-skills/tree/37a767651fea1317cf64a2849a2fd2c163620ec0/skills/plugins/rhdh-backstage-upgrade#sha256=96b158fdf11d61bdfb4d4e30a76fb6b1319af96a1ebc2f91204a92609155f09f
